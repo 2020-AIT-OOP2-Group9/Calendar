@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template, jsonify
 import json
-
+import uuid
 app = Flask(__name__)
 app.config["JSON_AS_ASCII"] = False
 
@@ -30,13 +30,12 @@ def schedule_get():
 def schedule_add():
     time = request.json.get('time', None)
     schedule = request.json.get('schedule', None)
-
-    # print(time)
-    # print(schedule)
+    print(time,schedule)
 
     json_sc = {
         "time": time,
-        "schedule": schedule
+        "schedule": schedule,
+        "id": str(uuid.uuid4())
     }
 
     # 値が入ってなかった場合の処理
@@ -67,11 +66,13 @@ def schedule_del():
     # 削除したい予定を持ってくる
     time = request.json.get('time', None)
     schedule = request.json.get('schedule', None)
+    id = request.json.get('id', None)
 
     # チェック
     check = {
         "time": time,
-        "schedule": schedule
+        "schedule": schedule,
+        "id": id
     }
 
     # JSON読み込み
@@ -84,10 +85,11 @@ def schedule_del():
     # フラグ
     flag = False
 
-    # 認証
+    # idを用いて予定を判別
     for i in range(len(sc_list)):
-        print(sc_list[i], check)
-        if sc_list[i].get("time") == check["time"] and sc_list[i].get("schedule") == check["schedule"]:
+        # print(sc_list[i], check)
+        if sc_list[i].get("id") == check["id"]:
+            # print("削除完了")
             flag = True
             # 元データを削除
             sc_list.remove(sc_list[i])
@@ -95,6 +97,7 @@ def schedule_del():
             # ファイル書き込み
             with open('schedule.json', 'w') as f:
                 json.dump(sc_list, f, indent=4, ensure_ascii=False)
+            break
         else:
             continue
 
