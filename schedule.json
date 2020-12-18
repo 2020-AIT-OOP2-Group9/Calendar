@@ -1,6 +1,14 @@
 [
     {
-        "date": "2020-12-16",
+        "time": "19:50",
+        "schedule": "a"
+    },
+    {
+        "time": "17:59",
+        "schedule": "hhh"
+    },
+    {
+        "time": "17:59",
         "schedule": "hhh"
     }
 ]

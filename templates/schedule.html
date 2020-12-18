@@ -21,7 +21,7 @@
       <table class="table" id="sc_list">
           <thead>
               <tr>
-                  <th scope="col">日付</th>
+                  <th scope="col">時間</th>
                   <th scope="col">スケジュール</th>
                   <th scope="col">　</th>
               </tr>
@@ -35,7 +35,7 @@
               <h3>予定の追加</h3>
               <form id="add">
                   <div class="form-row align-items-center">
-                      <input type="date" id="add_date" name="date" min="1900-01-01" pattern="\d{4}-\d{2}-\d{2}">
+                      <input type="time" id="add_time" name="time" min="00:00" max="23:59"　required>
                       <div class="col-auto"><input type="schedule" class="form-control" placeholder="スケジュール" id="add_sc" name="schedule"></div>
                       <div class="col-auto"><button id="add-submit" class="btn btn-outline-secondary">追加</button></div>
                       <input type="reset" value="入力をリセット"class="btn btn-secondary">

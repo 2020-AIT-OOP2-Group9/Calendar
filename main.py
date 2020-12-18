@@ -28,19 +28,19 @@ def schedule_get():
 # 予定の追加
 @app.route('/change/add', methods=["POST"])
 def schedule_add():
-    date = request.json.get('date', None)
+    time = request.json.get('time', None)
     schedule = request.json.get('schedule', None)
 
-    # print(date)
+    # print(time)
     # print(schedule)
 
     json_sc = {
-        "date": date,
+        "time": time,
         "schedule": schedule
     }
 
     # 値が入ってなかった場合の処理
-    if not schedule or not date:
+    if not schedule or not time:
         return jsonify({
             "message": "Error"
     })
@@ -65,12 +65,12 @@ def schedule_add():
 @app.route('/change/del', methods=["POST"])
 def schedule_del():
     # 削除したい予定を持ってくる
-    date = request.json.get('date', None)
+    time = request.json.get('time', None)
     schedule = request.json.get('schedule', None)
 
     # チェック
     check = {
-        "date": date,
+        "time": time,
         "schedule": schedule
     }
 
@@ -87,7 +87,7 @@ def schedule_del():
     # 認証
     for i in range(len(sc_list)):
         print(sc_list[i], check)
-        if sc_list[i].get("date") == check["date"] and sc_list[i].get("schedule") == check["schedule"]:
+        if sc_list[i].get("time") == check["time"] and sc_list[i].get("schedule") == check["schedule"]:
             flag = True
             # 元データを削除
             sc_list.remove(sc_list[i])
