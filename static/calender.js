@@ -20,7 +20,7 @@ function init() {
                 td.innerText = elm.date
                 tr.appendChild(td)
                 // スケジュール
-                let td = document.createElement('td')                                  
+                td = document.createElement('td')                                  
 
                 td.innerText = elm.schedule
                 tr.appendChild(td)                
