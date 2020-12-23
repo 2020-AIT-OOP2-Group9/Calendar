@@ -73,7 +73,6 @@ def calender_schedule_get():
     #print(dict2)
     return jsonify(dict2)
 
-
 # スケジュールの表示
 @app.route('/schedule')
 def schedule():
