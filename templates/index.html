@@ -19,17 +19,8 @@
 <body>
     <main>
         <h1>{{ year }}-{{ month }}</h1>
-        <form action="/this_month" method="POST">
-            <button type="submit" id="this_month", name="month">前の月</button>
-        </form>
         <form action="/next_month" method="POST">
-            <button type="submit" id="next_month_1" name="month">前の月</button>
-        </form>
-        <form action="/next_month" method="POST">
-            <button type="submit" id="next_month_2" name="month">次の月</button>
-        </form>
-        <form action="/month_after_next" method="POST">
-            <button type="submit" id="month_after_next" name="month">次の月</button>
+            <button type="submit" id="next_month" name="month">前の月</button>
         </form>
         <div class="display">
             <table class="table" id="calender-list">
