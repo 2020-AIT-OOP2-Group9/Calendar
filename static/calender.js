@@ -26,8 +26,10 @@ function init() {
                 let td = document.createElement('td')
                 td.innerText = i
                 tr.appendChild(td)
-                i = i + 1
-                day = day + 1
+                if (i < eom && j < 6) {
+                    i = i + 1
+                    day = day + 1
+                }
             }
         }
         tableBody.appendChild(tr)
