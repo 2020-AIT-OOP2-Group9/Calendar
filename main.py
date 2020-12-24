@@ -137,30 +137,45 @@ def calender_schedule_get():
 
     # 同じ日付の予定が3つ以上ある場合、省略する（未完成）
     i = 0
-    count = 0    
+    count = 1   
     k = 0
+    # 予定が4件以上なら3件のみ表示し、残りoo件と表示
+    limnum = 4
     dict2 = []    
+    length = len(dict1)
+    tmp_date = dict1[0]['date']
     for j in dict1:
         # 最初
-        if i == 0:
-            tmp_date = j['date']            
-            dict2.append(j)  
+        if i == 0:                       
+            dict2.append(j)
 
-        #次から
-        else:
-            # 前のデータの日付と同じなら
+        # 最後
+        elif i == length - 1:
             if j['date'] == tmp_date:
                 count = count + 1
-                
-            # 前のデータの日付と違うなら
+            if count < limnum:
+                dict2.append(j)
             else:
-                count = 0
-
-            dict2.append(j)  
+                dict3 = {"date" : tmp_date, "schedule" : f'残り{count-limnum+1}件'}
+                dict2.append(dict3)      
+        
+        else:
+            if j['date'] == tmp_date:
+                count = count + 1
+                if count < limnum:
+                    dict2.append(j)
+            else:
+                if count >= limnum:
+                    dict3 = {"date" : tmp_date, "schedule" : f'残り{count-limnum+1}件'}
+                    dict2.append(dict3) 
                 
-        i = i + 1                   
-       
-    #print(dict2)
+                dict2.append(j)
+                tmp_date = j['date']
+                count = 1
+        print(count)
+        i = i + 1           
+
+    # print(dict2)
     return jsonify(dict2)
 
 
