@@ -109,7 +109,7 @@ def calender_schedule_get():
         json_data = json.load(f)        
 
     # 並び替え(日付が古い順)
-    json_data = sorted(json_data, key=lambda x:x['date'])  
+    json_data = sorted(json_data, key=lambda x: (x['date'], x['time']))  
 
     # 現在の日付を取得
     dt_now = datetime.datetime.now()    
