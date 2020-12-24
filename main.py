@@ -31,7 +31,6 @@ def index():
                                          eom=eom,
                                          day=day)
                                    
-# 以下htmlで「前の月へ」、「次の月へ」のボタンを押されたときの処理                                         
 # 今月のカレンダーを表示
 @app.route('/this_month', methods=["GET", "POST"])
 def this_month():

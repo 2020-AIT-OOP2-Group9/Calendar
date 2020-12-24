@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="#">
     <!--カレンダーの表示-->
-    <script defer src="{{ url_for('static', filename='calender.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='calender_2.js') }}"></script>
     <script>
+        // pythonからの値を直接jsに渡すことができないので、ここで定義しています
+        // コードに波線出るけどこれで正常に動作します
+        // なので、気にせずマージしてください
         var year = {{ year|tojson }}
         var month = {{ month|tojson }}
         var day = {{ day|tojson }}
@@ -21,12 +25,6 @@
         <h1>{{ year }}-{{ month }}</h1>
         <form action="/this_month" method="POST">
             <button type="submit" id="this_month", name="month">前の月</button>
-        </form>
-        <form action="/next_month" method="POST">
-            <button type="submit" id="next_month_1" name="month">前の月</button>
-        </form>
-        <form action="/next_month" method="POST">
-            <button type="submit" id="next_month_2" name="month">次の月</button>
         </form>
         <form action="/month_after_next" method="POST">
             <button type="submit" id="month_after_next" name="month">次の月</button>
@@ -51,4 +49,5 @@
         </div>
     </main>
 </body>
+
 </html>
