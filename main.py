@@ -1,16 +1,105 @@
 from flask import Flask, request, render_template, jsonify
 import json
 import datetime
+
+import calendar
 import uuid
+
 
 app = Flask(__name__)
 app.config["JSON_AS_ASCII"] = False
 
 
-# カレンダー表示
+
+# 今月のカレンダーのカレンダー表示(初期表示)
+
 @app.route('/')
 def index():
-    return render_template("index.html")
+    dt_now = datetime.datetime.now()
+    # 今日の日付(年・月)を取得
+    year = dt_now.year
+    month = dt_now.month
+    # 月末の日にちを取得
+    eom = calendar.monthrange(year, month)[1]
+
+    # 月の初めの曜日を取得
+    dt = datetime.datetime(year, month, 1)
+    day = dt.weekday()
+
+    return render_template("index.html", year=year,
+                                         month=month,
+                                         eom=eom,
+                                         day=day)
+                                   
+# 今月のカレンダーを表示
+@app.route('/this_month', methods=["GET", "POST"])
+def this_month():
+    dt_now = datetime.datetime.now()
+    # 今日の日付(年・月)を取得
+    year = dt_now.year
+    month = dt_now.month
+    # 月末の日にちを取得
+    eom = calendar.monthrange(year, month)[1]
+
+    # 月の初めの曜日を取得
+    dt = datetime.datetime(year, month, 1)
+    day = dt.weekday()
+
+    return render_template("index.html", year=year,
+                                         month=month,
+                                         eom=eom,
+                                         day=day)
+    
+# 来月のカレンダーの表示
+@app.route('/next_month', methods=["POST"])
+def next_month():
+    dt_now = datetime.datetime.now()
+    year = dt_now.year
+    month = dt_now.month
+    if month == 12:
+        year = year + 1
+        month = 1
+    else:
+        month = month + 1
+    # 月末の日にちを取得
+    eom = calendar.monthrange(year, month)[1]
+
+    # 月の初めの曜日を取得
+    dt = datetime.datetime(year, month, 1)
+    day = dt.weekday()
+
+    return render_template("index_2.html", year=year,
+                                         month=month,
+                                         eom=eom,
+                                         day=day)
+
+
+# 再来月のカレンダーの表示
+@app.route('/month_after_next', methods=["POST"])
+def month_after_next():
+    dt_now = datetime.datetime.now()
+    year = dt_now.year
+    month = dt_now.month
+    if month == 11:
+        year = year + 1
+        month = 1
+    elif month == 12:
+        year = year + 1
+        month = 2
+    else:
+        month = month + 2
+    # 月末の日にちを取得
+    eom = calendar.monthrange(year, month)[1]
+
+    # 月の初めの曜日を取得
+    dt = datetime.datetime(year, month, 1)
+    day = dt.weekday()
+
+    return render_template("index_3.html", year=year,
+                                         month=month,
+                                         eom=eom,
+                                         day=day)
+
 
 # index.htmlに表示するsucedule.jsonの取得
 @app.route('/json', methods=["GET"])
@@ -19,7 +108,7 @@ def calender_schedule_get():
         json_data = json.load(f)        
 
     # 並び替え(日付が古い順)
-    json_data = sorted(json_data, key=lambda x:x['date'])  
+    json_data = sorted(json_data, key=lambda x: (x['date'], x['time']))  
 
     # 現在の日付を取得
     dt_now = datetime.datetime.now()    
@@ -47,30 +136,45 @@ def calender_schedule_get():
 
     # 同じ日付の予定が3つ以上ある場合、省略する（未完成）
     i = 0
-    count = 0    
+    count = 1   
     k = 0
+    # 予定が4件以上なら3件のみ表示し、残りoo件と表示
+    limnum = 4
     dict2 = []    
+    length = len(dict1)
+    tmp_date = dict1[0]['date']
     for j in dict1:
         # 最初
-        if i == 0:
-            tmp_date = j['date']            
-            dict2.append(j)  
+        if i == 0:                       
+            dict2.append(j)
 
-        #次から
-        else:
-            # 前のデータの日付と同じなら
+        # 最後
+        elif i == length - 1:
             if j['date'] == tmp_date:
                 count = count + 1
-                
-            # 前のデータの日付と違うなら
+            if count < limnum:
+                dict2.append(j)
             else:
-                count = 0
-
-            dict2.append(j)  
+                dict3 = {"date" : tmp_date, "schedule" : f'残り{count-limnum+1}件'}
+                dict2.append(dict3)      
+        
+        else:
+            if j['date'] == tmp_date:
+                count = count + 1
+                if count < limnum:
+                    dict2.append(j)
+            else:
+                if count >= limnum:
+                    dict3 = {"date" : tmp_date, "schedule" : f'残り{count-limnum+1}件'}
+                    dict2.append(dict3) 
                 
-        i = i + 1                   
-       
-    #print(dict2)
+                dict2.append(j)
+                tmp_date = j['date']
+                count = 1
+        print(count)
+        i = i + 1           
+
+    # print(dict2)
     return jsonify(dict2)
 
 # スケジュールの表示

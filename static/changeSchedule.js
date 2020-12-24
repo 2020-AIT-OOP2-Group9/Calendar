@@ -7,7 +7,7 @@ document.getElementById("send").addEventListener('click', (e) => {
     tm1 = document.getElementById("add_time").value
     tm2 = document.getElementById("add_time2").value
     sc = document.getElementById("add_sc").value
-    const obj = {time: document.getElementById("add_time").value+"~"+document.getElementById("add_time2").value, schedule: document.getElementById("add_sc").value};
+    const obj = {time: document.getElementById("add_time").value+"〜"+document.getElementById("add_time2").value, schedule: document.getElementById("add_sc").value};
     console.log(obj)
     const method = "post";
     const body = JSON.stringify(obj);
