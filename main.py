@@ -52,7 +52,7 @@ def this_month():
     
 # 来月のカレンダーの表示
 @app.route('/next_month', methods=["POST"])
-def month_ago():
+def next_month():
     dt_now = datetime.datetime.now()
     year = dt_now.year
     month = dt_now.month
@@ -68,7 +68,7 @@ def month_ago():
     dt = datetime.datetime(year, month, 1)
     day = dt.weekday()
 
-    return render_template("index.html", year=year,
+    return render_template("index_2.html", year=year,
                                          month=month,
                                          eom=eom,
                                          day=day)
@@ -76,7 +76,7 @@ def month_ago():
 
 # 再来月のカレンダーの表示
 @app.route('/month_after_next', methods=["POST"])
-def next_month():
+def month_after_next():
     dt_now = datetime.datetime.now()
     year = dt_now.year
     month = dt_now.month
@@ -95,7 +95,7 @@ def next_month():
     dt = datetime.datetime(year, month, 1)
     day = dt.weekday()
 
-    return render_template("index.html", year=year,
+    return render_template("index_3.html", year=year,
                                          month=month,
                                          eom=eom,
                                          day=day)
