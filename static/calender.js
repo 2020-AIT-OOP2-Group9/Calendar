@@ -8,10 +8,10 @@ function init() {
 
     week_day = 7
 
-    console.log(day)
+    /**console.log(day)
     console.log(eom)
     console.log(year)
-    console.log(month)
+    console.log(month)**/
 
 
     for (var i = 1; i <= eom; i++) {
@@ -24,7 +24,18 @@ function init() {
             }
             else {
                 let td = document.createElement('td')
-                td.innerText = i
+                var element = document.createElement("button")
+                element.innerText = i
+                element.id = i
+                element.value = year + "-" + month + "-" + i
+
+                /**console.log(element.id)
+                console.log(element.value)**/
+
+                td.appendChild(element)
+                let td_2 = document.createElement('td')
+                td_2.innerText = "ここに予定が表示されます"
+                td.appendChild(td_2)
                 tr.appendChild(td)
                 if (i < eom && j < 6) {
                     i = i + 1
@@ -35,7 +46,6 @@ function init() {
         tableBody.appendChild(tr)
         day = 0
     }
-
 }
 
 init()

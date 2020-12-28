@@ -32,7 +32,7 @@ def index():
                                          day=day)
                                    
 # 今月のカレンダーを表示
-@app.route('/this_month', methods=["GET", "POST"])
+@app.route('/this_month', methods=["POST"])
 def this_month():
     dt_now = datetime.datetime.now()
     # 今日の日付(年・月)を取得
@@ -100,6 +100,9 @@ def month_after_next():
                                          eom=eom,
                                          day=day)
 
+@app.route('/display_schedule', methods=["POST"])
+def data_schedule():
+    return render_template("schedule.html")
 
 # index.htmlに表示するsucedule.jsonの取得
 @app.route('/json', methods=["GET"])
@@ -108,7 +111,7 @@ def calender_schedule_get():
         json_data = json.load(f)        
 
     # 並び替え(日付が古い順)
-    json_data = sorted(json_data, key=lambda x:x['date'])  
+    json_data = sorted(json_data, key=lambda x: (x['date'], x['time']))  
 
     # 現在の日付を取得
     dt_now = datetime.datetime.now()    
@@ -136,32 +139,46 @@ def calender_schedule_get():
 
     # 同じ日付の予定が3つ以上ある場合、省略する（未完成）
     i = 0
-    count = 0    
+    count = 1   
     k = 0
+    # 予定が4件以上なら3件のみ表示し、残りoo件と表示
+    limnum = 4
     dict2 = []    
+    length = len(dict1)
+    tmp_date = dict1[0]['date']
     for j in dict1:
         # 最初
-        if i == 0:
-            tmp_date = j['date']            
-            dict2.append(j)  
+        if i == 0:                       
+            dict2.append(j)
 
-        #次から
-        else:
-            # 前のデータの日付と同じなら
+        # 最後
+        elif i == length - 1:
             if j['date'] == tmp_date:
                 count = count + 1
-                
-            # 前のデータの日付と違うなら
+            if count < limnum:
+                dict2.append(j)
             else:
-                count = 0
-
-            dict2.append(j)  
+                dict3 = {"date" : tmp_date, "schedule" : f'残り{count-limnum+1}件'}
+                dict2.append(dict3)      
+        
+        else:
+            if j['date'] == tmp_date:
+                count = count + 1
+                if count < limnum:
+                    dict2.append(j)
+            else:
+                if count >= limnum:
+                    dict3 = {"date" : tmp_date, "schedule" : f'残り{count-limnum+1}件'}
+                    dict2.append(dict3) 
                 
-        i = i + 1                   
-       
-    #print(dict2)
-    return jsonify(dict2)
+                dict2.append(j)
+                tmp_date = j['date']
+                count = 1
+        print(count)
+        i = i + 1           
 
+    # print(dict2)
+    return jsonify(dict2)
 
 # スケジュールの表示
 @app.route('/schedule')
