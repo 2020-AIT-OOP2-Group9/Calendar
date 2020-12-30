@@ -1,5 +1,6 @@
 // カレンダーで選択した日付の予定を表示する処理、jsonファイルにデータを追加・削除する処理
 display()
+create_button()
 
 // 追加
 document.getElementById("send").addEventListener('click', (e) => {
@@ -7,14 +8,15 @@ document.getElementById("send").addEventListener('click', (e) => {
     e.preventDefault();
     tm1 = document.getElementById("add_time").value
     tm2 = document.getElementById("add_time2").value
+    da = date
     sc = document.getElementById("add_sc").value
-    const obj = {time: document.getElementById("add_time").value+"~"+document.getElementById("add_time2").value, schedule: document.getElementById("add_sc").value};
+    const obj = { time: document.getElementById("add_time").value + "~" + document.getElementById("add_time2").value, date: date, schedule: document.getElementById("add_sc").value };
     console.log(obj)
     const method = "post";
     const body = JSON.stringify(obj);
     const headers = {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json'
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
     };
 
     let error_message = ""
@@ -29,37 +31,41 @@ document.getElementById("send").addEventListener('click', (e) => {
         document.getElementById('error-container').innerHTML = ""
         document.getElementById('error-container').style.display = "none"
     }
-    fetch("./change/add", {method, headers, body}).then((res)=> res.json()).then(()=>{display();}).catch(console.error);
+    fetch("./change/add", { method, headers, body }).then((res) => res.json()).then(() => { display(); }).catch(console.error);
     document.getElementById('message-container').innerHTML = "追加完了"
     document.getElementById('message-container').style.display = "block"
 });
 
-function del(time, schedule, id){
-    const obj = { "time": time, "schedule": schedule, "id": id};
+function del(time, schedule, id) {
+    const obj = { "time": time, "schedule": schedule, "id": id };
     console.log(obj)
     const method = "post";
     const body = JSON.stringify(obj);
     const headers = {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json'
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
     };
-    fetch("./change/del", {method, headers, body}).then((res)=> res.json()).then(()=>{display();}).catch(console.error);
+    fetch("./change/del", { method, headers, body }).then((res) => res.json()).then(() => { display(); }).catch(console.error);
 }
-function check(time, schedule, id){
-  ret = confirm("本当に削除しますか？");
-  if (ret == true){
-    del(time, schedule, id)
-  }
+function check(time, schedule, id) {
+    ret = confirm("本当に削除しますか？");
+    if (ret == true) {
+        del(time, schedule, id)
+    }
 }
 
-function display(){
+function display() {
+    let btn = document.getElementById('return_calender')
+    btn.value = String(date)
+    console.log(btn.value)
     fetch("./schedule/json")
-    .then((res)=> res.json())
-    .then((res)=>{
-        document.getElementById("sc-body").innerHTML = "";
-        res.forEach((val)=>{
-            const haikuCard =
-            `
+        .then((res) => res.json())
+        .then((res) => {
+            document.getElementById("sc-body").innerHTML = "";
+            res.forEach((val) => {
+                if (val.date == date) {
+                    const haikuCard =
+                        `
                 <div class="card shadow-sm mb-3">
                     <div class="card-body">
                         <p class="fs-2 lh-1 text-center mt-3">${val['schedule']}</p>
@@ -80,8 +86,54 @@ function display(){
                 </div>
             `
 
-            document.getElementById("sc-body").innerHTML += haikuCard;
+                    document.getElementById("sc-body").innerHTML += haikuCard;
+                }
+
+
+            })
         })
-    })
-    .catch(console.error);
+        .catch(console.error);
 }
+
+function create_button() {
+    let btn = document.getElementById('button')
+    var date = document.getElementById('return_calender').value
+
+    var today = new Date()
+    year = today.getFullYear()
+    year_2 = today.getFullYear()
+    month = today.getMonth() + 1
+    month_2 = today.getMonth() + 1
+    da = String(year) + "-" + String(month)
+    if (month_2 == 12) {
+        year_2 = year_2 + 1
+        month_2 = 1
+    }
+    else{
+        month_2 = month_2 + 1
+    }
+    console.log(year)
+    console.log(year_2)
+    console.log(month)
+    console.log(month_2)
+
+    da = String(year) + "-" + String(month)
+    da_2 = String(year_2) + "-" + String(month_2)
+
+    console.log(da)
+    console.log(da_2)
+
+
+    let data = new FormData()
+
+    if (date.indexOf(da) > -1) {
+        btn.action = '/this_month'
+    }
+    else if (date.indexOf(da_2) > -1) {
+        btn.action = '/next_month'
+    }
+    else {
+        btn.action = 'month_after_next'
+    }
+}
+

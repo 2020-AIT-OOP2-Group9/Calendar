@@ -7,14 +7,15 @@
     <link rel="shortcut icon" href="#">
     <!--カレンダーの表示-->
     <script defer src="{{ url_for('static', filename='calender_2.js') }}"></script>
+    <link rel="stylesheet" href="../static/style_2.css">
     <script>
         // pythonからの値を直接jsに渡すことができないので、ここで定義しています
         // コードに波線出るけどこれで正常に動作します
         // なので、気にせずマージしてください
-        var year = {{ year|tojson }}
-        var month = {{ month|tojson }}
-        var day = {{ day|tojson }}
-        var eom = {{ eom|tojson }}
+        var year = {{ year| tojson }}
+        var month = {{ month| tojson }}
+        var day = {{ day| tojson }}
+        var eom = {{ eom| tojson }}
     </script>
     <title>カレンダー</title>
 
@@ -24,29 +25,31 @@
     <main>
         <h1>{{ year }}-{{ month }}</h1>
         <form action="/this_month" method="POST">
-            <button type="submit" id="this_month", name="month">前の月</button>
+            <button type="submit" id="this_month" , name="month">前の月</button>
         </form>
         <form action="/month_after_next" method="POST">
             <button type="submit" id="month_after_next" name="month">次の月</button>
         </form>
-        <div class="display">
-            <table class="table" id="calender-list" border="1">
-                <thead>
-                    <tr>
-                        <th scope="col">月</th>
-                        <th scope="col">火</th>
-                        <th scope="col">水</th>
-                        <th scope="col">木</th>
-                        <th scope="col">金</th>
-                        <th scope="col">土</th>
-                        <th scope="col">日</th>
-                    </tr>
-                </thead>
-                <tbody>
-
-                </tbody>
-            </table>
-        </div>
+        <form action="/display_schedule" method="POST">
+            <div class="display">
+                <table class="table" id="calender-list" border="1">
+                    <thead>
+                        <tr>
+                            <th scope="col">月</th>
+                            <th scope="col">火</th>
+                            <th scope="col">水</th>
+                            <th scope="col">木</th>
+                            <th scope="col">金</th>
+                            <th scope="col">土</th>
+                            <th scope="col">日</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+    
+                    </tbody>
+                </table>
+            </div>
+        </form>
     </main>
 </body>
 

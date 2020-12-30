@@ -12,6 +12,9 @@
   
     <script defer src="{{ url_for('static', filename='changeSchedule.js') }}"></script>
     <script src="https://kit.fontawesome.com/1632a6074b.js" crossorigin="anonymous"></script>
+    <script>
+        var date = {{ date|tojson }}
+    </script>
 </head>
 <body>
     <nav class="title">
@@ -45,5 +48,8 @@
             </div>
         </div>
     </div>
+    <form id="button" method="POST">
+        <button id="return_calender">カレンダーへ</button>
+    </form>
 </body>
 </html>

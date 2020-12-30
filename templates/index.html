@@ -6,6 +6,7 @@
     <link rel="shortcut icon" href="#">
     <!--カレンダーの表示-->
     <script defer src="{{ url_for('static', filename='calender.js') }}"></script>
+    <link rel="stylesheet" href="../static/style_2.css">
     <script>
         var year = {{ year|tojson }}
         var month = {{ month|tojson }}
@@ -17,20 +18,6 @@
 </head>
 
 <body>
-    <!-- ちゃんと受け取れているかを確認するためのプログラム -->
-    <h1>スケジュール</h1>
-    <table class="table" id="sc_list">
-        <thead>
-            <tr>
-                <th scope="col">日付</th>
-                <th scope="col">スケジュール</th>                                            
-            </tr>
-        </thead>
-        <tbody id="list_body">
-        </tbody>
-    </table>
-    <!-- ここまで -->
-
     <main>
         <h1>{{ year }}-{{ month }}</h1>
         <form action="/next_month" method="POST">
