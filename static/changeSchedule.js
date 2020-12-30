@@ -10,7 +10,11 @@ document.getElementById("send").addEventListener('click', (e) => {
     tm2 = document.getElementById("add_time2").value
     da = date
     sc = document.getElementById("add_sc").value
+<<<<<<< HEAD
     const obj = { time: document.getElementById("add_time").value + "~" + document.getElementById("add_time2").value, date: date, schedule: document.getElementById("add_sc").value };
+=======
+    const obj = {time: document.getElementById("add_time").value+"〜"+document.getElementById("add_time2").value, schedule: document.getElementById("add_sc").value};
+>>>>>>> e633dffad7ac2b1530770bfd1efd697ef8d0b3e1
     console.log(obj)
     const method = "post";
     const body = JSON.stringify(obj);
