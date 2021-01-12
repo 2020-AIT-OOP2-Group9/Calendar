@@ -6,12 +6,6 @@ body{
     background: rgb(207, 245, 247);
 }
 
-.title{
-    background-image: url(./css-image-folder/siba.jpg);
-    height: 60px;
-    text-align: center;
-    padding-top: 5px;
-}
 
 .h1{
     background-image: url(./css-image-folder/siba.jpg);
@@ -19,26 +13,34 @@ body{
     font-size: 35px;
 }
 
+.scale{
+    padding-top: 20px;
+}
+
 .add-data{
     background-color: white;
 }
 
-input{
-    background-color: white;
-}
-
-#send{
+#add-submit{
     background-color: rgb(206, 203, 203);
 }
-#send:hover{
+#add-submit:hover{
     background-color: rgb(153, 152, 152);
 }
 
-
-.card-body{
-    border:solid 2px rgb(205, 247, 171);
+.title{
+    background-image: url(./css-image-folder/siba.jpg);
+    height: 60px;
+    text-align: center;
+    padding-top: 5px;
 }
 
-#add_sc{
-    margin-bottom: 10px;
+.card-body{
+    border:solid 2px rgb(250, 236, 190);
+}
+
+thead{
+    border-top: dashed 3px  rgb(175, 3, 3);
+    border-bottom: dashed 3px rgb(175, 3, 3);
+
 }
