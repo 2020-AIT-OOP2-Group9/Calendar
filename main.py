@@ -148,42 +148,26 @@ def calender_schedule_get():
     i = 0
     count = 1   
     k = 0
-<<<<<<< HEAD
     # 予定が2件以上なら1件のみ表示し、残りoo件と表示
     limnum = 2
     dict2 = []    
     length = len(dict1)
     tmp_date = dict1[0]['date']
     #print(dict1)
-=======
-    # 予定が4件以上なら3件のみ表示し、残りoo件と表示
-    limnum = 4
-    dict2 = []    
-    length = len(dict1)
-    tmp_date = dict1[0]['date']
->>>>>>> e633dffad7ac2b1530770bfd1efd697ef8d0b3e1
     for j in dict1:
         # 最初
         if i == 0:                       
             dict2.append(j)
 
         # 最後
-<<<<<<< HEAD
         elif i == length - 1 & i == length:
-=======
-        elif i == length - 1:
->>>>>>> e633dffad7ac2b1530770bfd1efd697ef8d0b3e1
             if j['date'] == tmp_date:
                 count = count + 1
             if count < limnum:
                 dict2.append(j)
             else:
                 dict3 = {"date" : tmp_date, "schedule" : f'残り{count-limnum+1}件'}
-<<<<<<< HEAD
                 dict2.append(dict3)
-=======
-                dict2.append(dict3)      
->>>>>>> e633dffad7ac2b1530770bfd1efd697ef8d0b3e1
         
         else:
             if j['date'] == tmp_date:
@@ -197,21 +181,12 @@ def calender_schedule_get():
                 
                 dict2.append(j)
                 tmp_date = j['date']
-<<<<<<< HEAD
                 #print(tmp_date)
                 count = 1
             
         #print(count)
         i = i + 1           
 
-    #print(dict2)
-=======
-                count = 1
-        print(count)
-        i = i + 1           
-
-    # print(dict2)
->>>>>>> e633dffad7ac2b1530770bfd1efd697ef8d0b3e1
     return jsonify(dict2)
 
 # スケジュールの表示
