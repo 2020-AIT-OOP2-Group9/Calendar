@@ -32,7 +32,7 @@ def index():
                                          day=day)
                                    
 # 今月のカレンダーを表示
-@app.route('/this_month', methods=["GET", "POST"])
+@app.route('/this_month', methods=["POST"])
 def this_month():
     dt_now = datetime.datetime.now()
     # 今日の日付(年・月)を取得
@@ -100,13 +100,19 @@ def month_after_next():
                                          eom=eom,
                                          day=day)
 
+# クリックされた日付の予定を表示するschedule.htmlに遷移
+@app.route('/display_schedule', methods=["POST"])
+def data_schedule():
+    date = request.form.get("date")
+    #print(date)
+    return render_template("schedule.html", date=date)
 
 # index.htmlに表示するsucedule.jsonの取得
 @app.route('/json', methods=["GET"])
 def calender_schedule_get():
     with open('schedule.json') as f:
         json_data = json.load(f)        
-
+    #print(len(json_data))
     # 並び替え(日付が古い順)
     json_data = sorted(json_data, key=lambda x: (x['date'], x['time']))  
 
@@ -117,7 +123,11 @@ def calender_schedule_get():
     # 現在の月より古いデータを削除    
     dict1 = []
     for j in json_data:  
-        date = j["date"][0:4] + j["date"][5:7]              
+        if '-' in j["date"][5:7]:
+            date = j["date"][0:4] + "0" + j["date"][5:6]
+        else:
+            date = j["date"][0:4] + j["date"][5:7]   
+        print(date)           
         if not(int(date) < int(dt_now.strftime('%Y%m'))):            
             dict1.append(j)   
 
@@ -131,32 +141,49 @@ def calender_schedule_get():
     for j in dict1:        
         if len(j['schedule']) > limnum:
             dict1[i]['schedule'] = j['schedule'][0:limnum] + "..."
-
+        # print(dict1[i]['schedule'])
         i = i + 1            
 
     # 同じ日付の予定が3つ以上ある場合、省略する（未完成）
     i = 0
     count = 1   
     k = 0
+<<<<<<< HEAD
+    # 予定が2件以上なら1件のみ表示し、残りoo件と表示
+    limnum = 2
+    dict2 = []    
+    length = len(dict1)
+    tmp_date = dict1[0]['date']
+    #print(dict1)
+=======
     # 予定が4件以上なら3件のみ表示し、残りoo件と表示
     limnum = 4
     dict2 = []    
     length = len(dict1)
     tmp_date = dict1[0]['date']
+>>>>>>> e633dffad7ac2b1530770bfd1efd697ef8d0b3e1
     for j in dict1:
         # 最初
         if i == 0:                       
             dict2.append(j)
 
         # 最後
+<<<<<<< HEAD
+        elif i == length - 1 & i == length:
+=======
         elif i == length - 1:
+>>>>>>> e633dffad7ac2b1530770bfd1efd697ef8d0b3e1
             if j['date'] == tmp_date:
                 count = count + 1
             if count < limnum:
                 dict2.append(j)
             else:
                 dict3 = {"date" : tmp_date, "schedule" : f'残り{count-limnum+1}件'}
+<<<<<<< HEAD
+                dict2.append(dict3)
+=======
                 dict2.append(dict3)      
+>>>>>>> e633dffad7ac2b1530770bfd1efd697ef8d0b3e1
         
         else:
             if j['date'] == tmp_date:
@@ -170,11 +197,21 @@ def calender_schedule_get():
                 
                 dict2.append(j)
                 tmp_date = j['date']
+<<<<<<< HEAD
+                #print(tmp_date)
+                count = 1
+            
+        #print(count)
+        i = i + 1           
+
+    #print(dict2)
+=======
                 count = 1
         print(count)
         i = i + 1           
 
     # print(dict2)
+>>>>>>> e633dffad7ac2b1530770bfd1efd697ef8d0b3e1
     return jsonify(dict2)
 
 # スケジュールの表示
@@ -194,11 +231,13 @@ def schedule_get():
 @app.route('/change/add', methods=["POST"])
 def schedule_add():
     time = request.json.get('time', None)
+    date = request.json.get('date', None)
     schedule = request.json.get('schedule', None)
-    print(time,schedule)
+    #print(time,date,schedule)
 
     json_sc = {
         "time": time,
+        "date": date,
         "schedule": schedule,
         "id": str(uuid.uuid4())
     }

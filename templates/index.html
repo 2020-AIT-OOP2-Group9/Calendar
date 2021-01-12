@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="#">
     <!--カレンダーの表示-->
-    <script defer src="{{ url_for('static', filename='calender_2.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='calender.js') }}"></script>
+    <link rel="stylesheet" href="../static/style_2.css">
     <script>
         var year = {{ year|tojson }}
         var month = {{ month|tojson }}
@@ -34,26 +35,30 @@
     <main>
         <h1>{{ year }}-{{ month }}</h1>
         <form action="/next_month" method="POST">
-            <button type="submit" id="next_month" name="month">次の月</button>
+            <tr>
+                <td><label><button type="submit" id="next_month" name="month">次の月</button></label></td>
+            </tr>
         </form>
-        <div class="display">
-            <table class="table" id="calender-list">
-                <thead>
-                    <tr>
-                        <th scope="col">月</th>
-                        <th scope="col">火</th>
-                        <th scope="col">水</th>
-                        <th scope="col">木</th>
-                        <th scope="col">金</th>
-                        <th scope="col">土</th>
-                        <th scope="col">日</th>
-                    </tr>
-                </thead>
-                <tbody>
-
-                </tbody>
-            </table>
-        </div>
+        <form action="/display_schedule" method="POST">
+            <div class="display">
+                <table class="table" id="calender-list" border="1">
+                    <thead>
+                        <tr>
+                            <th scope="col">月</th>
+                            <th scope="col">火</th>
+                            <th scope="col">水</th>
+                            <th scope="col">木</th>
+                            <th scope="col">金</th>
+                            <th scope="col">土</th>
+                            <th scope="col">日</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+    
+                    </tbody>
+                </table>
+            </div>
+        </form>
     </main>
 </body>
 </html>
