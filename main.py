@@ -118,9 +118,8 @@ def calender_schedule_get():
 
     # 現在の日付を取得
     dt_now = datetime.datetime.now()    
-
-
-    # 現在の月より古いデータを削除    
+    
+    # 現在の月より古いデータを削除   
     dict1 = []
     for j in json_data:  
         if '-' in j["date"][5:7]:
