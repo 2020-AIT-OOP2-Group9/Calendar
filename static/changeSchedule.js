@@ -73,7 +73,7 @@ function display() {
                                 <div class="col-auto align-self-end">
                                     <button type="button" class="btn btn-danger"
                                      onclick=check("${val['time']}","${val['schedule']}","${val['id']}")>
-                                        <i>削除</i>
+                                        <i class="sakujo">削除</i>
                                     </button>
                                 </div>
                                 <div class="col-auto">

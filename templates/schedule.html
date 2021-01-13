@@ -4,14 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>スケジュール一覧</title>
+    <!-- bootstrapのcss -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-    <script defer src="{{ url_for('static', filename='changeSchedule.js') }}"></script>
+    <!-- 追加のcss -->
+    <link rel="stylesheet" href="../static/style.css"><script defer src="{{ url_for('static', filename='changeSchedule.js') }}"></script>
     <script src="https://kit.fontawesome.com/1632a6074b.js" crossorigin="anonymous"></script>
     <script>
         var date = {{ date|tojson }}
     </script>
 </head>
 <body>
+    <h1>スケジュールの変更</h1>
     <div class="container">
         <div class="row">
             <div class="col m-3">
@@ -20,7 +23,7 @@
                         <form id="search">
                             <div class="input-group mb-3">
                                 <input type="time" id="add_time" name="time" min="00:00" max="23:59">
-                                <div>〜</div>
+                                <div class="kara">〜</div>
                                 <input type="time" id="add_time2" name="time" min="00:00" max="23:59">
                                 <input type="text" class="form-control" id="add_sc" placeholder="スケジュール">
                                 <div class="input-group-append">
