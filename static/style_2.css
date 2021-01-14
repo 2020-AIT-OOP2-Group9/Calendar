@@ -1,3 +1,31 @@
+/* *{
+    background: rgb(207, 245, 247);
+} */
+
+body{
+    margin: 0;
+    background: rgb(207, 245, 247);
+}
+
+h1{
+    background-image: url(./css-image-folder/siba.jpg);
+    color: rgb(239, 248, 215);
+    font-size: 35px;
+    text-align:center;
+    padding:10px 0;
+    margin: 0;
+    margin-bottom: 10px;
+}
+
+.month_change{
+    float: left;
+}
+
+#month_after_next{
+    position: absolute;
+    right: 0;
+}
+
 table {
     width: 100%;
 }
@@ -5,8 +33,25 @@ table {
 th {
     padding: 10px;
     width: 10%;
+    background-color: rgb(3, 204, 3);
 }
 
 td {
     padding: 5px;
+}
+
+tbody{
+    background-color: rgb(234, 246, 247);
+}
+
+.table{
+    border:solid 2px rgb(247, 203, 62);
+}
+
+.Saturday{
+    color: blue;
+}
+
+.Sunday{
+    color: red;
 }
